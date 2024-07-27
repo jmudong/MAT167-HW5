@@ -1,0 +1,29 @@
+---
+title: "Homework 5"
+author: "Jasper Dong, Sunny Liu, Alec Lin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(MASS)
+```
+
+## Problem 1
+```{r}
+G = fractions(matrix(c(0, 1/2, 0, 1/3, 0,
+                       0, 0, 0, 1/3, 0,
+                       1, 1/2, 0, 0, 0,
+                       0, 0, 1/2, 0, 1,
+                       0, 0, 1/2, 1/3, 0),
+                      ncol = 5, nrow = 5))
+G
+```
+
+
+## Problem 2
+
+## Problem 3
+
+
+
