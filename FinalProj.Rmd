@@ -1,0 +1,11 @@
+---
+title: "MAT167-Proj"
+author: "Jasper Dong, Sunny Liu, Alexander Lin"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
