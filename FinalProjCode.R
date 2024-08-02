@@ -42,7 +42,7 @@ ranks_plot = barplot(ranks$pagerank,
 powermethod = function(A, k){
   # function that returns largest eigenvalue and eigenvector of matrix A
   # given k iterations
-  v = fractions(rep(1/nrow(A), nrow(A))) # initialize vector
+  v = rep(1/sqrt(nrow(A)), nrow(A)) # initialize vector
   for(i in 1:k){
     w = A %*% v
     v = w/norm(w, type = c("1"))
@@ -53,11 +53,11 @@ powermethod = function(A, k){
 
 # Iterating through different k's
 ret = c()
-for(k in 1:70){
+for(k in 1:50){
   ret = c(ret, powermethod(t(Gnew), k)$eigenvalue)
 }
-df = data.frame(iteration = c(1:70), eigenvalue = ret)
-evector3 = powermethod(t(Gnew), 70)$eigenvector
+df = data.frame(iteration = c(1:50), eigenvalue = ret) # converges at 28 iterations
+evector3 = powermethod(t(Gnew), 28)$eigenvector # should be equivalent to evector2n
 
 # Teleportation
 alpha = 0.85
