@@ -25,7 +25,7 @@ Gnew = G
 Gnew[5,] = rep(1/12, 12)
 ev2 = eigen(t(Gnew)) # Eigenvalue decomposition
 evalue2 = ev2$values[1]
-evector2 = abs(ev2$vectors[,1])
+evector2 = ev2$vectors[,1]
 
 # Normalizing eigenvector
 evector2n = evector2/sum(evector2)
@@ -45,7 +45,7 @@ powermethod = function(A, k){
   v = fractions(rep(1/nrow(A), nrow(A))) # initialize vector
   for(i in 1:k){
     w = A %*% v
-    v = w/sum(abs(w))
+    v = w/norm(w, type = c("1"))
     lambda = t(v) %*% A %*% v
   }
   return(list(eigenvalue = lambda, eigenvector = v))
@@ -54,10 +54,18 @@ powermethod = function(A, k){
 # Iterating through different k's
 ret = c()
 for(k in 1:70){
-  ret = c(ret, powermethod(G, k)$eigenvalue)
+  ret = c(ret, powermethod(t(Gnew), k)$eigenvalue)
 }
 df = data.frame(iteration = c(1:70), eigenvalue = ret)
+evector3 = powermethod(t(Gnew), 70)$eigenvector
 
+# Teleportation
+alpha = 0.85
+E = fractions((1/nrow(G)) * rep(1, nrow(G)) %*% t(rep(1, nrow(G))))
+Gtilda = alpha*G + (1-alpha)*E
+
+# Eigenvalue decomposition for Gtilda
+ev2 = eigen(Gtilda)
 
 # Term-Document Matrix
 D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
