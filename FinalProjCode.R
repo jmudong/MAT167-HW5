@@ -48,7 +48,11 @@ powermethod = function(A, k){
 }
 
 # Iterating through different k's
-
+ret = c()
+for(k in 1:70){
+  ret = c(ret, powermethod(G, k)$eigenvalue)
+}
+df = data.frame(iteration = c(1:70), eigenvalue = ret)
 
 
 # Term-Document Matrix
