@@ -23,7 +23,7 @@ evector1 = ev1$vectors[,1] # Eigenvector corresponding to largest eigenvalue
 # Adding artificial links to dangling node
 Gnew = G
 Gnew[5,] = rep(1/12, 12)
-ev2 = eigen(t(Gnew)) # Eigenvalue decomposition
+ev2 = eigen(t(Gnew)) # Eigenvalue decomposition of new G matrix
 evalue2 = ev2$values[1]
 evector2 = ev2$vectors[,1]
 
@@ -42,7 +42,7 @@ ranks_plot = barplot(ranks$pagerank,
 powermethod = function(A, k){
   # function that returns largest eigenvalue and eigenvector of matrix A
   # given k iterations
-  v = rep(1/sqrt(nrow(A)), nrow(A)) # initialize vector
+  v = rep(1/nrow(A), nrow(A)) # initialize vector
   for(i in 1:k){
     w = A %*% v
     v = w/norm(w, type = c("1"))
@@ -65,7 +65,7 @@ E = fractions((1/nrow(G)) * rep(1, nrow(G)) %*% t(rep(1, nrow(G))))
 Gtilda = alpha*G + (1-alpha)*E
 
 # Eigenvalue decomposition for Gtilda
-ev2 = eigen(Gtilda)
+ev3 = eigen(t(Gtilda))
 
 # Term-Document Matrix
 D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
