@@ -31,7 +31,7 @@ evector2 = ev2$vectors[,1]
 evector2n = evector2/sum(evector2)
 
 # Ordering eigenvector
-ranks = data.frame(webpage = letters[1:12], pagerank = evector2n)
+ranks = data.frame(webpage = letters[1:12], pagerank = Re(evector2n))
 ranks_sorted = ranks[order(ranks$pagerank, decreasing = TRUE),]
 ranks_plot = barplot(ranks$pagerank, 
                      names.arg = ranks$webpage, 
