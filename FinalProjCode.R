@@ -25,10 +25,10 @@ Gnew = G
 Gnew[5,] = rep(1/12, 12)
 ev2 = eigen(t(Gnew)) # Eigenvalue decomposition
 evalue2 = ev2$values[1]
-evector2 = ev2$vectors[,1]
+evector2 = abs(ev2$vectors[,1])
 
 # Normalizing eigenvector
-evector2n = evector2/(sum(abs(evector2)))
+evector2n = evector2/sum(evector2)
 
 # Ordering eigenvectors
 D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, # term document matrix
@@ -48,3 +48,21 @@ D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, # term document matrix
              0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
              0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1),
             ncol = 16, nrow = 12))
+# Relevancy set sorted by decreasing importance
+R = data.frame(webpage = letters[1:12], importance = colSums(D), PageRank = evector2n) 
+R = R[order(R$importance),]
+
+# Power Iteration
+powermethod = function(A, k){
+  # function that returns largest eigenvalue and eigenvector of matrix A
+  # given k iterations
+  v = fractions(rep(1/nrow(A), nrow(A))) # initialize vector
+  for(i in 1:k){
+    w = A %*% v
+    v = w/sum(abs(w))
+    lambda = t(v) %*% A %*% v
+  }
+  return(list(eigenvalue = lambda, eigenvector = v))
+}
+
+# Iterating through different k's
