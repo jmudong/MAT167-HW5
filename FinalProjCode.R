@@ -30,27 +30,9 @@ evector2 = abs(ev2$vectors[,1])
 # Normalizing eigenvector
 evector2n = evector2/sum(evector2)
 
-# Ordering eigenvectors
-D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, # term document matrix
-             1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1,
-             1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0,
-             1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1,
-             0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0,
-             0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-             1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
-             1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0,
-             0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
-             0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1,
-             1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1,
-             1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1,
-             0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
-             0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0,
-             0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-             0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1),
-            ncol = 16, nrow = 12))
-# Relevancy set sorted by decreasing importance
-R = data.frame(webpage = letters[1:12], importance = colSums(D), PageRank = evector2n) 
-R = R[order(R$importance),]
+# Ordering eigenvector
+ranks = data.frame(webpage = letters[1:12], pagerank = evector2n)
+ranks_sorted = ranks[order(ranks$pagerank, decreasing = TRUE),]
 
 # Power Iteration
 powermethod = function(A, k){
@@ -66,3 +48,24 @@ powermethod = function(A, k){
 }
 
 # Iterating through different k's
+
+
+
+# Term-Document Matrix
+D = t(matrix(c(1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0,
+               1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1,
+               1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 1, 0,
+               1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1,
+               0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0,
+               0, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0,
+               1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1,
+               1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0,
+               0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1,
+               0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1,
+               1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1,
+               1, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1,
+               0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0,
+               0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0,
+               0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+               0, 1, 0, 1, 0, 1, 0, 0, 1, 1, 1, 1),
+             ncol = 16, nrow = 12))
