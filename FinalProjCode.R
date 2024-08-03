@@ -65,13 +65,13 @@ for(k in 1:50){
   l2 = norm(ev_power$eigenvector, type = "2")
   error = c(error, abs - l2)
 }
-df = data.frame(iteration = c(1:50), eigenvalue = ret, error = error) # converges at 28 iterations
+power_df = data.frame(iteration = c(1:50), eigenvalue = ret, error = error) # converges at 28 iterations
 evector_power = powermethod(t(Gnew), 28)$eigenvector # should be equivalent to evector2n
 
 # Plot of l2 errors of power iteration results
-error_plot = ggplot(data = df, aes(x = iteration, y = abs(error))) +
+error_plot = ggplot(data = power_df, aes(x = iteration, y = abs(error))) +
                 geom_line(col = "red") +
-                labs(title = "Relative l2 Errors of Power Iteration Results",
+                labs(title = "Relative l1 Errors of Power Iteration Results",
                      x = "# Iteration",
                      y = "Relative Error") +
                 theme_minimal()
