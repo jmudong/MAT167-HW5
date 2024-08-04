@@ -71,7 +71,7 @@ evector_power = powermethod(t(Gnew), 28)$eigenvector # should be equivalent to e
 # Plot of l2 errors of power iteration results
 error_plot = ggplot(data = power_df, aes(x = iteration, y = abs(error))) +
                 geom_line(col = "red") +
-                labs(title = "Relative l1 Errors of Power Iteration Results",
+                labs(title = "Relative l2 Errors of Power Iteration Results",
                      x = "# Iteration",
                      y = "Relative Error") +
                 theme_minimal()
@@ -181,6 +181,35 @@ list(
   katsura_and_oak = d_katsura_oak_df_sorted,
   aspen_not_sassafras = d_aspen_not_sassafras_df_sorted
 )
+
+# Iterating through alphas
+n = nrow(G)
+E = matrix(1/n, n, n)
+l1_eigen = norm(as.matrix(Re(evector2), type = "1"))
+results = c()
+error_alpha = c()
+for (alpha in seq(0.01, 1, 0.01)){
+  G_tilde = alpha * G + (1 - alpha) * E
+  ev_alpha = eigen(t(G_tilde))
+  evector_alpha = Re(ev_alpha$vectors[,1])
+  l1_alpha = norm(as.matrix(evector_alpha), type = "1")
+  results = c(results, l1_alpha)
+  error_alpha = c(error_alpha, l1_eigen - l1_alpha)
+}
+
+# Calculating alpha errors
+df_alpha = data.frame(alpha = seq(0.01, 1, 0.01), error = error_alpha)
+
+alpha_plot = ggplot(data = df_alpha, aes(x = alpha, y = abs(error))) +
+  geom_line(col = "red") +
+  labs(title = "Relative l1 Errors of Choices for Alpha",
+       x = "Alpha",
+       y = "Relative Error") +
+  theme_minimal()
+alpha_plot
+
+
+
 
 
 
